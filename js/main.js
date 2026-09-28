@@ -12,7 +12,7 @@ const ORDINATION = {
   patron: "",                           // e.g. "Saint Felix" — also added to the Litany
   homeParish: "",
   formedAt: "",
-  portrait: "",                         // e.g. "images/felix.jpg" — empty shows the monogram
+  portrait: "images/felix.jpg",         // the gold initial shows until it loads, or if it can't; "" for initial only
   livestream: "",                       // link appears in "Watching from afar" when set
   travel: "",                           // replaces the "Getting there" text when set
 
@@ -219,6 +219,18 @@ const ORDINATION = {
     revealIO.observe(el);
   }
 
+  /* ---------- Portrait: fades in over the initial once loaded ---------- */
+  let photo = null;
+  if (C.portrait) {
+    const frameEl = $("[data-portrait]");
+    photo = Object.assign(new Image(), { className: "profile__photo", decoding: "async" });
+    photo.addEventListener("load", () => frameEl.classList.add("has-photo"));
+    // Slow or failed download: remove it and the gold initial stays
+    photo.addEventListener("error", () => { photo.remove(); photo = null; });
+    photo.src = C.portrait;
+    frameEl.appendChild(photo);
+  }
+
   /* ---------- Paint all text in the current language ---------- */
   const frame = $("[data-form]");
   const parts = $$(".rite-part");
@@ -257,13 +269,7 @@ const ORDINATION = {
     });
     $$("[data-hide-empty]").forEach(el => { el.hidden = !data[el.dataset.hideEmpty]; });
 
-    if (C.portrait) {
-      const p = $("[data-portrait]");
-      p.style.backgroundImage = `url("${C.portrait}")`;
-      p.classList.add("has-photo");
-      p.setAttribute("role", "img");
-      p.setAttribute("aria-label", t("portrait"));
-    }
+    if (photo) photo.alt = t("portrait");
 
     $("[data-live]").innerHTML = C.livestream
       ? `<a class="link" href="${html(C.livestream)}" target="_blank" rel="noopener">${t("v6.link")}</a>`
