@@ -14,28 +14,45 @@
   <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
 
   <!-- ============ NAVIGATION ============ -->
   <header class="site-header" id="top">
     <nav class="nav" aria-label="Primary">
       <a class="nav__brand" href="#home">
         <span class="nav__cross" aria-hidden="true">✠</span>
-        <span><span data-bind="firstName">Felix</span> <span class="nav__brand-sub">Ordinations</span></span>
+        <span><span data-bind="firstName">Felix</span> <span class="nav__brand-sub" data-i18n="nav.sub">Ordinations</span></span>
       </a>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="#letter" data-i18n="nav.word">A Word</a></li>
+        <li><a href="#journey" data-i18n="nav.journey">Journey</a></li>
+        <li><a href="#rite" data-i18n="nav.rite">Order of Service</a></li>
+        <li><a href="#schedule" data-i18n="nav.days">The Days</a></li>
+        <li><a href="#visit" data-i18n="nav.visit">Visiting</a></li>
+        <li><a href="#prayer" data-i18n="nav.prayer">Prayer</a></li>
+        <li><a class="btn btn--primary btn--sm" href="#rsvp" data-i18n="nav.rsvp">RSVP</a></li>
+      </ul>
+      <div class="lang" data-lang>
+        <span class="sr-only" id="lang-label" data-i18n="lang.label">Language</span>
+        <button class="lang__btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lang-label lang-current">
+          <span class="flag flag--en" data-lang-flag aria-hidden="true"></span>
+          <span class="lang__name" id="lang-current" data-lang-name>English</span>
+          <span class="lang__chev" aria-hidden="true"></span>
+        </button>
+        <div class="lang__panel" hidden>
+          <p class="lang__head" aria-hidden="true" data-i18n="lang.label">Language</p>
+          <ul class="lang__list" role="listbox" aria-labelledby="lang-label">
+            <li role="option" tabindex="-1" aria-selected="true" data-value="en" lang="en"><span class="flag flag--en" aria-hidden="true"></span>English</li>
+            <li role="option" tabindex="-1" aria-selected="false" data-value="es" lang="es"><span class="flag flag--es" aria-hidden="true"></span>Español</li>
+            <li role="option" tabindex="-1" aria-selected="false" data-value="fr" lang="fr"><span class="flag flag--fr" aria-hidden="true"></span>Français</li>
+            <li role="option" tabindex="-1" aria-selected="false" data-value="it" lang="it"><span class="flag flag--it" aria-hidden="true"></span>Italiano</li>
+          </ul>
+        </div>
+      </div>
       <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links">
         <span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span>
-        <span class="sr-only">Menu</span>
+        <span class="sr-only" data-i18n="nav.menu">Menu</span>
       </button>
-      <ul class="nav__links" id="nav-links">
-        <li><a href="#letter">A Word</a></li>
-        <li><a href="#journey">Journey</a></li>
-        <li><a href="#rite">Order of Service</a></li>
-        <li><a href="#schedule">The Days</a></li>
-        <li><a href="#visit">Visiting</a></li>
-        <li><a href="#prayer">Prayer</a></li>
-        <li><a class="btn btn--primary btn--sm" href="#rsvp">RSVP</a></li>
-      </ul>
     </nav>
   </header>
 
@@ -49,43 +66,43 @@
         <path d="M300 20V0" />
       </svg>
       <div class="hero__inner">
-        <p class="hero__announce reveal">With joy and thanksgiving we announce</p>
-        <p class="hero__rite reveal">The Ordinations of</p>
+        <p class="hero__announce reveal" data-i18n="hero.announce">With joy and thanksgiving we announce</p>
+        <p class="hero__rite reveal" data-i18n="hero.rite">The Ordinations of</p>
         <h1 class="hero__name reveal" data-bind="displayName">Felix Matengo</h1>
-        <p class="hero__by reveal" data-hide-empty="bishop">through the laying on of hands and prayer of<br><span data-bind="bishop"></span></p>
+        <p class="hero__by reveal" data-hide-empty="bishop"><span data-i18n="hero.by">through the laying on of hands and prayer of</span><br><span data-bind="bishop"></span></p>
 
         <div class="hero__dates reveal">
           <div class="hero__when" data-milestone="deacon">
-            <p class="hero__when-lbl">To the Diaconate</p>
+            <p class="hero__when-lbl" data-i18n="hero.toDeacon">To the Diaconate</p>
             <p class="hero__when-date" data-bind="deaconLong">Saturday, the Twenty-First of November</p>
             <p class="hero__when-year" data-bind="deaconYear">Two Thousand Twenty-Six</p>
-            <p class="hero__when-done">Ordained deacon · Deo gratias</p>
+            <p class="hero__when-done" data-i18n="hero.doneDeacon">Ordained deacon · Deo gratias</p>
           </div>
           <span class="hero__sep" aria-hidden="true">✟</span>
           <div class="hero__when" data-milestone="priest">
-            <p class="hero__when-lbl">To the Priesthood</p>
+            <p class="hero__when-lbl" data-i18n="hero.toPriest">To the Priesthood</p>
             <p class="hero__when-date" data-bind="priestLong">Saturday, the Twenty-Second of May</p>
             <p class="hero__when-year" data-bind="priestYear">Two Thousand Twenty-Seven</p>
-            <p class="hero__when-done">Ordained priest · Deo gratias</p>
+            <p class="hero__when-done" data-i18n="hero.donePriest">Ordained priest · Deo gratias</p>
           </div>
         </div>
 
         <div class="countdown-wrap reveal">
           <div class="countdown" role="timer" aria-live="off">
-            <div class="countdown__cell"><span class="countdown__num" data-cd="days">—</span><span class="countdown__lbl">Days</span></div>
-            <div class="countdown__cell"><span class="countdown__num" data-cd="hours">—</span><span class="countdown__lbl">Hours</span></div>
-            <div class="countdown__cell"><span class="countdown__num" data-cd="minutes">—</span><span class="countdown__lbl">Minutes</span></div>
+            <div class="countdown__cell"><span class="countdown__num" data-cd="days">—</span><span class="countdown__lbl" data-i18n="cd.days">Days</span></div>
+            <div class="countdown__cell"><span class="countdown__num" data-cd="hours">—</span><span class="countdown__lbl" data-i18n="cd.hours">Hours</span></div>
+            <div class="countdown__cell"><span class="countdown__num" data-cd="minutes">—</span><span class="countdown__lbl" data-i18n="cd.minutes">Minutes</span></div>
           </div>
           <p class="countdown__caption" data-cd="caption">until his ordination to the diaconate</p>
         </div>
-        <p class="countdown__done" hidden>Thanks be to God — Felix is a priest for ever.</p>
+        <p class="countdown__done" hidden></p>
 
         <div class="hero__actions reveal">
-          <a class="btn btn--gold" href="#rsvp">Kindly Reply</a>
-          <a class="btn btn--ghost-light" href="#rite">Order of Service</a>
+          <a class="btn btn--gold" href="#rsvp" data-i18n="hero.reply">Kindly Reply</a>
+          <a class="btn btn--ghost-light" href="#rite" data-i18n="hero.riteBtn">Order of Service</a>
         </div>
       </div>
-      <a class="hero__scroll" href="#verse" aria-label="Scroll to continue">
+      <a class="hero__scroll" href="#verse" aria-label="Scroll to continue" data-i18n-aria="hero.scroll">
         <span aria-hidden="true">⌄</span>
       </a>
     </section>
@@ -93,8 +110,8 @@
     <!-- ============ VERSE ============ -->
     <section class="verse" id="verse">
       <blockquote class="verse__quote reveal">
-        <p>“It was not you who chose me, but I who chose you and appointed you to go and bear fruit that will remain.”</p>
-        <cite>Saint John 15 : 16</cite>
+        <p data-i18n="verse.text">“It was not you who chose me, but I who chose you and appointed you to go and bear fruit that will remain.”</p>
+        <cite data-i18n="verse.cite">Saint John 15 : 16</cite>
       </blockquote>
     </section>
 
@@ -102,29 +119,29 @@
     <section class="section section--vellum" id="letter">
       <div class="container letter-grid">
         <article class="letter reveal">
-          <p class="eyebrow">A Word from <span data-bind="firstName">Felix</span></p>
-          <h2 class="h2">Dear family &amp; friends,</h2>
+          <p class="eyebrow" data-i18n="letter.eyebrow">A Word from <span data-bind="firstName">Felix</span></p>
+          <h2 class="h2" data-i18n="letter.greet">Dear family &amp; friends,</h2>
           <div class="letter__body">
-            <p class="dropcap">For years I have tried to find the right words to thank you, and I keep coming back to the simplest ones. You prayed for me when I did not know what I was asking for. You fed me, listened to me, and quietly asked how my studies were going — even when the answer was long.</p>
-            <p>Twice in the coming months I will lie prostrate on the floor of a church while the whole Church calls on the saints: first to be ordained a deacon, and then, God willing, a priest. I will not be lying there alone. Every one of you who has carried me in prayer will be there too.</p>
-            <p>Please come if you can. If you cannot, pray for me — and know that at my first Mass, and at every Mass after it, I will remember you at the altar.</p>
+            <p class="dropcap" data-i18n="letter.p1">For years I have tried to find the right words to thank you, and I keep coming back to the simplest ones. You prayed for me when I did not know what I was asking for. You fed me, listened to me, and quietly asked how my studies were going — even when the answer was long.</p>
+            <p data-i18n="letter.p2">Twice in the coming months I will lie prostrate on the floor of a church while the whole Church calls on the saints: first to be ordained a deacon, and then, God willing, a priest. I will not be lying there alone. Every one of you who has carried me in prayer will be there too.</p>
+            <p data-i18n="letter.p3">Please come if you can. If you cannot, pray for me — and know that at my first Mass, and at every Mass after it, I will remember you at the altar.</p>
           </div>
-          <p class="letter__sign">In Christ,<br><span class="letter__signature" data-bind="firstName">Felix</span></p>
+          <p class="letter__sign"><span data-i18n="letter.sign">In Christ,</span><br><span class="letter__signature" data-bind="firstName">Felix</span></p>
         </article>
 
-        <aside class="profile reveal" aria-label="About the ordinand">
+        <aside class="profile reveal" aria-label="About the ordinand" data-i18n-aria="profile.aria">
           <div class="profile__frame">
             <div class="profile__portrait" data-portrait>
               <span class="profile__monogram" data-bind="initial">F</span>
             </div>
           </div>
           <dl class="profile__facts">
-            <div><dt>Diaconate</dt><dd data-bind="deaconShort">21 November 2026</dd></div>
-            <div><dt>Priesthood</dt><dd data-bind="priestShort">22 May 2027</dd></div>
-            <div data-hide-empty="motto"><dt>Priestly Motto</dt><dd class="profile__motto" data-bind="motto"></dd></div>
-            <div data-hide-empty="patron"><dt>Patron</dt><dd data-bind="patron"></dd></div>
-            <div data-hide-empty="homeParish"><dt>Home Parish</dt><dd data-bind="homeParish"></dd></div>
-            <div data-hide-empty="formedAt"><dt>Formed at</dt><dd data-bind="formedAt"></dd></div>
+            <div><dt data-i18n="profile.deacon">Diaconate</dt><dd data-bind="deaconShort">21 November 2026</dd></div>
+            <div><dt data-i18n="profile.priest">Priesthood</dt><dd data-bind="priestShort">22 May 2027</dd></div>
+            <div data-hide-empty="motto"><dt data-i18n="profile.motto">Priestly Motto</dt><dd class="profile__motto" data-bind="motto"></dd></div>
+            <div data-hide-empty="patron"><dt data-i18n="profile.patron">Patron</dt><dd data-bind="patron"></dd></div>
+            <div data-hide-empty="homeParish"><dt data-i18n="profile.parish">Home Parish</dt><dd data-bind="homeParish"></dd></div>
+            <div data-hide-empty="formedAt"><dt data-i18n="profile.formed">Formed at</dt><dd data-bind="formedAt"></dd></div>
           </dl>
         </aside>
       </div>
@@ -134,41 +151,41 @@
     <section class="section section--parchment" id="journey">
       <div class="container container--narrow">
         <header class="section__head reveal">
-          <p class="eyebrow">The Road to the Altar</p>
-          <h2 class="h2">A vocation, slowly heard</h2>
+          <p class="eyebrow" data-i18n="journey.eyebrow">The Road to the Altar</p>
+          <h2 class="h2" data-i18n="journey.title">A vocation, slowly heard</h2>
           <div class="divider" aria-hidden="true"><span>✟</span></div>
         </header>
 
         <ol class="timeline">
           <li class="timeline__item timeline__item--done reveal">
             <span class="timeline__mark" aria-hidden="true"></span>
-            <p class="timeline__when">Baptism</p>
-            <h3 class="h3">Claimed for Christ</h3>
-            <p>Brought to the font by parents and godparents who promised to raise him in the faith — a promise they kept.</p>
+            <p class="timeline__when" data-i18n="j1.when">Baptism</p>
+            <h3 class="h3" data-i18n="j1.title">Claimed for Christ</h3>
+            <p data-i18n="j1.text">Brought to the font by parents and godparents who promised to raise him in the faith — a promise they kept.</p>
           </li>
           <li class="timeline__item timeline__item--done reveal">
             <span class="timeline__mark" aria-hidden="true"></span>
-            <p class="timeline__when">The first stirring</p>
-            <h3 class="h3">A question that would not go away</h3>
-            <p>A quiet sense, returning again and again in prayer, that God was asking for everything — and a friend who once asked, simply, <em>“Have you ever thought about it?”</em></p>
+            <p class="timeline__when" data-i18n="j2.when">The first stirring</p>
+            <h3 class="h3" data-i18n="j2.title">A question that would not go away</h3>
+            <p data-i18n="j2.text">A quiet sense, returning again and again in prayer, that God was asking for everything — and a friend who once asked, simply, <em>“Have you ever thought about it?”</em></p>
           </li>
           <li class="timeline__item timeline__item--done reveal">
             <span class="timeline__mark" aria-hidden="true"></span>
-            <p class="timeline__when">Formation</p>
-            <h3 class="h3">Years of preparation</h3>
-            <p>Philosophy, theology, work, and many hours before the Blessed Sacrament learning to listen.</p>
+            <p class="timeline__when" data-i18n="j3.when">Formation</p>
+            <h3 class="h3" data-i18n="j3.title">Years of preparation</h3>
+            <p data-i18n="j3.text">Philosophy, theology, work, and many hours before the Blessed Sacrament learning to listen.</p>
           </li>
           <li class="timeline__item reveal" data-milestone="deacon">
             <span class="timeline__mark" aria-hidden="true"></span>
             <p class="timeline__when" data-bind="deaconShort">21 November 2026</p>
-            <h3 class="h3">Ordained to serve</h3>
-            <p>Promising prayer, celibacy and obedience, he receives the Book of the Gospels and becomes a deacon — a servant of the Word, the altar and the poor.</p>
+            <h3 class="h3" data-i18n="j4.title">Ordained to serve</h3>
+            <p data-i18n="j4.text">Promising prayer, celibacy and obedience, he receives the Book of the Gospels and becomes a deacon — a servant of the Word, the altar and the poor.</p>
           </li>
           <li class="timeline__item reveal" data-milestone="priest">
             <span class="timeline__mark" aria-hidden="true"></span>
             <p class="timeline__when" data-bind="priestShort">22 May 2027</p>
             <h3 class="h3">Tu es sacerdos in æternum</h3>
-            <p>“You are a priest for ever, in the line of Melchizedek.” His hands are anointed, and the next morning he offers his first Mass.</p>
+            <p data-i18n="j5.text">“You are a priest for ever, in the line of Melchizedek.” His hands are anointed, and the next morning he offers his first Mass.</p>
           </li>
         </ol>
       </div>
@@ -179,28 +196,28 @@
       <div class="container">
         <header class="section__head reveal">
           <p class="eyebrow">Ordo Missæ</p>
-          <h2 class="h2">The Order of Service</h2>
-          <p class="section__lede">Follow along during the Mass, or read beforehand to understand what you will witness. Words in <span class="rubric-inline">red italic</span> describe what happens; they are not spoken.</p>
-          <div class="switch" role="group" aria-label="Which ordination">
-            <button type="button" data-show="deacon" aria-pressed="true">The Diaconate<span data-bind="deaconShort">21 November 2026</span></button>
-            <button type="button" data-show="priest" aria-pressed="false">The Priesthood<span data-bind="priestShort">22 May 2027</span></button>
+          <h2 class="h2" data-i18n="rite.title">The Order of Service</h2>
+          <p class="section__lede" data-i18n="rite.lede">Follow along during the Mass, or read beforehand to understand what you will witness. Words in <span class="rubric-inline">red italic</span> describe what happens; they are not spoken.</p>
+          <div class="switch" role="group" aria-label="Which ordination" data-i18n-aria="rite.switchAria">
+            <button type="button" data-show="deacon" aria-pressed="true"><b data-i18n="rite.deacon">The Diaconate</b><span data-bind="deaconShort">21 November 2026</span></button>
+            <button type="button" data-show="priest" aria-pressed="false"><b data-i18n="rite.priest">The Priesthood</b><span data-bind="priestShort">22 May 2027</span></button>
           </div>
         </header>
 
         <div class="rite-layout">
-          <aside class="rite-toc" aria-label="Parts of the Mass">
-            <p class="label">Contents</p>
+          <aside class="rite-toc" aria-label="Parts of the Mass" data-i18n-aria="toc.aria">
+            <p class="label" data-i18n="toc.label">Contents</p>
             <ol>
-              <li><a href="#part-1"><span class="numeral">I</span> Introductory Rites</a></li>
-              <li><a href="#part-2"><span class="numeral">II</span> Liturgy of the Word</a></li>
-              <li><a href="#part-3"><span class="numeral">III</span> Rite of Ordination</a></li>
-              <li><a href="#part-4"><span class="numeral">IV</span> Liturgy of the Eucharist</a></li>
-              <li><a href="#part-5"><span class="numeral">V</span> Concluding Rites</a></li>
+              <li><a href="#part-1"><span class="numeral">I</span> <span data-i18n="part1">Introductory Rites</span></a></li>
+              <li><a href="#part-2"><span class="numeral">II</span> <span data-i18n="part2">Liturgy of the Word</span></a></li>
+              <li><a href="#part-3"><span class="numeral">III</span> <span data-i18n="part3">Rite of Ordination</span></a></li>
+              <li><a href="#part-4"><span class="numeral">IV</span> <span data-i18n="part4">Liturgy of the Eucharist</span></a></li>
+              <li><a href="#part-5"><span class="numeral">V</span> <span data-i18n="part5">Concluding Rites</span></a></li>
             </ol>
             <div class="rite-tools">
-              <button class="btn btn--outline btn--sm" type="button" data-action="large-print" aria-pressed="false">Aa&nbsp; Larger text</button>
+              <button class="btn btn--outline btn--sm" type="button" data-action="large-print" aria-pressed="false" data-i18n="tools.large">Aa&nbsp; Larger text</button>
               <button class="btn btn--outline btn--sm" type="button" data-action="expand-all">Open all</button>
-              <button class="btn btn--text btn--sm" type="button" data-action="print">Print this booklet</button>
+              <button class="btn btn--text btn--sm" type="button" data-action="print" data-i18n="tools.print">Print this booklet</button>
             </div>
           </aside>
 
@@ -208,158 +225,158 @@
 
             <!-- I -->
             <details class="rite-part" id="part-1" open>
-              <summary><span class="numeral">I</span><span class="rite-part__title">Introductory Rites</span><span class="rite-part__chev" aria-hidden="true"></span></summary>
+              <summary><span class="numeral">I</span><span class="rite-part__title" data-i18n="part1">Introductory Rites</span><span class="rite-part__chev" aria-hidden="true"></span></summary>
               <div class="rite-part__body">
-                <h4 class="rite-h">Entrance Procession</h4>
-                <p class="rubric">All stand as the procession enters: the cross and candles, the ministers and clergy, <span data-for="deacon">the one to be ordained deacon</span><span data-for="priest">the one to be ordained priest</span>, and last, the Bishop.</p>
-                <h4 class="rite-h">Greeting</h4>
-                <p class="vr"><span class="v">℣.</span> In the name of the Father, and of the Son, and of the Holy Spirit.</p>
-                <p class="vr"><span class="r">℟.</span> <strong>Amen.</strong></p>
-                <p class="vr"><span class="v">℣.</span> Peace be with you.</p>
-                <p class="vr"><span class="r">℟.</span> <strong>And with your spirit.</strong></p>
-                <h4 class="rite-h">Gloria &amp; Collect</h4>
-                <p class="rubric">The Gloria is sung. The Bishop then prays the Collect for the Ordination of <span data-for="deacon">Deacons</span><span data-for="priest">Priests</span>.</p>
+                <h4 class="rite-h" data-i18n="h.entrance">Entrance Procession</h4>
+                <p class="rubric" data-i18n="p1.proc">All stand as the procession enters: the cross and candles, the ministers and clergy, <span data-for="deacon">the one to be ordained deacon</span><span data-for="priest">the one to be ordained priest</span>, and last, the Bishop.</p>
+                <h4 class="rite-h" data-i18n="h.greeting">Greeting</h4>
+                <p class="vr"><span class="v">℣.</span> <span data-i18n="vr.sign">In the name of the Father, and of the Son, and of the Holy Spirit.</span></p>
+                <p class="vr"><span class="r">℟.</span> <strong data-i18n="r.amen">Amen.</strong></p>
+                <p class="vr"><span class="v">℣.</span> <span data-i18n="vr.peace">Peace be with you.</span></p>
+                <p class="vr"><span class="r">℟.</span> <strong data-i18n="r.spirit">And with your spirit.</strong></p>
+                <h4 class="rite-h" data-i18n="h.gloria">Gloria &amp; Collect</h4>
+                <p class="rubric" data-i18n="p1.gloria">The Gloria is sung. The Bishop then prays the Collect for the Ordination of <span data-for="deacon">Deacons</span><span data-for="priest">Priests</span>.</p>
               </div>
             </details>
 
             <!-- II -->
             <details class="rite-part" id="part-2">
-              <summary><span class="numeral">II</span><span class="rite-part__title">Liturgy of the Word</span><span class="rite-part__chev" aria-hidden="true"></span></summary>
+              <summary><span class="numeral">II</span><span class="rite-part__title" data-i18n="part2">Liturgy of the Word</span><span class="rite-part__chev" aria-hidden="true"></span></summary>
               <div class="rite-part__body">
-                <p class="rubric">All sit.</p>
+                <p class="rubric" data-i18n="rub.sit">All sit.</p>
 
                 <div data-for="deacon">
                   <div class="pericope">
-                    <p class="label">First Reading</p>
-                    <p class="pericope__text"><span class="incipit">S</span>elect from among you, brothers, seven reputable men, filled with the Spirit and wisdom, whom we shall appoint to this task.</p>
-                    <p class="pericope__cite">Acts of the Apostles 6 : 1–7</p>
+                    <p class="label" data-i18n="lbl.first">First Reading</p>
+                    <p class="pericope__text" data-i18n="d.r1"><span class="incipit">S</span>elect from among you, brothers, seven reputable men, filled with the Spirit and wisdom, whom we shall appoint to this task.</p>
+                    <p class="pericope__cite" data-i18n="d.r1c">Acts of the Apostles 6 : 1–7</p>
                   </div>
                   <div class="pericope">
-                    <p class="label">Responsorial Psalm</p>
-                    <p class="vr"><span class="r">℟.</span> <strong>The Lord is my shepherd; there is nothing I shall want.</strong></p>
-                    <p class="pericope__cite">Psalm 23</p>
+                    <p class="label" data-i18n="lbl.psalm">Responsorial Psalm</p>
+                    <p class="vr"><span class="r">℟.</span> <strong data-i18n="d.ps">The Lord is my shepherd; there is nothing I shall want.</strong></p>
+                    <p class="pericope__cite" data-i18n="d.psc">Psalm 23</p>
                   </div>
                   <div class="pericope">
-                    <p class="label">Second Reading</p>
-                    <p class="pericope__text"><span class="incipit">W</span>e hold this treasure in earthen vessels, that the surpassing power may be of God and not from us.</p>
-                    <p class="pericope__cite">2 Corinthians 4 : 1–7</p>
+                    <p class="label" data-i18n="lbl.second">Second Reading</p>
+                    <p class="pericope__text" data-i18n="d.r2"><span class="incipit">W</span>e hold this treasure in earthen vessels, that the surpassing power may be of God and not from us.</p>
+                    <p class="pericope__cite" data-i18n="d.r2c">2 Corinthians 4 : 1–7</p>
                   </div>
-                  <p class="rubric">All stand for the Gospel Acclamation.</p>
+                  <p class="rubric" data-i18n="rub.stand">All stand for the Gospel Acclamation.</p>
                   <div class="pericope pericope--gospel">
-                    <p class="label">Holy Gospel</p>
-                    <p class="pericope__text"><span class="incipit">L</span>et the greatest among you be as the youngest, and the leader as the servant… I am among you as the one who serves.</p>
-                    <p class="pericope__cite">Luke 22 : 24–27</p>
+                    <p class="label" data-i18n="lbl.gospel">Holy Gospel</p>
+                    <p class="pericope__text" data-i18n="d.gos"><span class="incipit">L</span>et the greatest among you be as the youngest, and the leader as the servant… I am among you as the one who serves.</p>
+                    <p class="pericope__cite" data-i18n="d.gosc">Luke 22 : 24–27</p>
                   </div>
                 </div>
 
                 <div data-for="priest">
                   <div class="pericope">
-                    <p class="label">First Reading</p>
-                    <p class="pericope__text"><span class="incipit">B</span>efore I formed you in the womb I knew you, before you were born I dedicated you… To whomever I send you, you shall go; whatever I command you, you shall speak.</p>
-                    <p class="pericope__cite">Jeremiah 1 : 4–9</p>
+                    <p class="label" data-i18n="lbl.first">First Reading</p>
+                    <p class="pericope__text" data-i18n="p.r1"><span class="incipit">B</span>efore I formed you in the womb I knew you, before you were born I dedicated you… To whomever I send you, you shall go; whatever I command you, you shall speak.</p>
+                    <p class="pericope__cite" data-i18n="p.r1c">Jeremiah 1 : 4–9</p>
                   </div>
                   <div class="pericope">
-                    <p class="label">Responsorial Psalm</p>
-                    <p class="vr"><span class="r">℟.</span> <strong>You are a priest for ever, in the line of Melchizedek.</strong></p>
-                    <p class="pericope__cite">Psalm 110</p>
+                    <p class="label" data-i18n="lbl.psalm">Responsorial Psalm</p>
+                    <p class="vr"><span class="r">℟.</span> <strong data-i18n="p.ps">You are a priest for ever, in the line of Melchizedek.</strong></p>
+                    <p class="pericope__cite" data-i18n="p.psc">Psalm 110</p>
                   </div>
                   <div class="pericope">
-                    <p class="label">Second Reading</p>
-                    <p class="pericope__text"><span class="incipit">E</span>very high priest is taken from among men and made their representative before God… No one takes this honour upon himself but only when called by God.</p>
-                    <p class="pericope__cite">Hebrews 5 : 1–10</p>
+                    <p class="label" data-i18n="lbl.second">Second Reading</p>
+                    <p class="pericope__text" data-i18n="p.r2"><span class="incipit">E</span>very high priest is taken from among men and made their representative before God… No one takes this honour upon himself but only when called by God.</p>
+                    <p class="pericope__cite" data-i18n="p.r2c">Hebrews 5 : 1–10</p>
                   </div>
-                  <p class="rubric">All stand for the Gospel Acclamation.</p>
+                  <p class="rubric" data-i18n="rub.stand">All stand for the Gospel Acclamation.</p>
                   <div class="pericope pericope--gospel">
-                    <p class="label">Holy Gospel</p>
-                    <p class="pericope__text"><span class="incipit">A</span>s the Father loves me, so I also love you. Remain in my love… It was not you who chose me, but I who chose you.</p>
-                    <p class="pericope__cite">John 15 : 9–17</p>
+                    <p class="label" data-i18n="lbl.gospel">Holy Gospel</p>
+                    <p class="pericope__text" data-i18n="p.gos"><span class="incipit">A</span>s the Father loves me, so I also love you. Remain in my love… It was not you who chose me, but I who chose you.</p>
+                    <p class="pericope__cite" data-i18n="p.gosc">John 15 : 9–17</p>
                   </div>
                 </div>
-                <p class="note">These are readings often chosen for an ordination; the readings on the day may differ.</p>
+                <p class="note" data-i18n="readings.note">These are readings often chosen for an ordination; the readings on the day may differ.</p>
               </div>
             </details>
 
             <!-- III -->
             <details class="rite-part rite-part--solemn" id="part-3">
-              <summary><span class="numeral">III</span><span class="rite-part__title">Rite of Ordination</span><span class="rite-part__chev" aria-hidden="true"></span></summary>
+              <summary><span class="numeral">III</span><span class="rite-part__title" data-i18n="part3">Rite of Ordination</span><span class="rite-part__chev" aria-hidden="true"></span></summary>
               <div class="rite-part__body">
 
-                <h4 class="rite-h">Election of the Candidate</h4>
-                <p class="rubric">The candidate is called by name.</p>
-                <p class="vr"><span class="v">℣.</span> Let <span data-bind="firstName">Felix</span>, who is to be ordained <span data-for="deacon">deacon</span><span data-for="priest">priest</span>, come forward.</p>
-                <p class="vr"><span class="r">℟.</span> <strong>Present.</strong></p>
-                <p class="rubric">A priest testifies that the candidate has been found worthy. The Bishop then chooses him for the Order of the <span data-for="deacon">Diaconate</span><span data-for="priest">Priesthood</span>.</p>
-                <p class="vr"><span class="r">℟.</span> <strong>Thanks be to God.</strong></p>
-                <p class="rubric">The congregation shows its assent — traditionally by applause.</p>
+                <h4 class="rite-h" data-i18n="h.election">Election of the Candidate</h4>
+                <p class="rubric" data-i18n="rub.called">The candidate is called by name.</p>
+                <p class="vr"><span class="v">℣.</span> <span data-i18n="vr.come">Let <span data-bind="firstName">Felix</span>, who is to be ordained <span data-for="deacon">deacon</span><span data-for="priest">priest</span>, come forward.</span></p>
+                <p class="vr"><span class="r">℟.</span> <strong data-i18n="r.present">Present.</strong></p>
+                <p class="rubric" data-i18n="rub.worthy">A priest testifies that the candidate has been found worthy. The Bishop then chooses him for the Order of the <span data-for="deacon">Diaconate</span><span data-for="priest">Priesthood</span>.</p>
+                <p class="vr"><span class="r">℟.</span> <strong data-i18n="r.thanks">Thanks be to God.</strong></p>
+                <p class="rubric" data-i18n="rub.assent">The congregation shows its assent — traditionally by applause.</p>
 
-                <h4 class="rite-h">Homily</h4>
-                <p class="rubric">The Bishop preaches to the people and to the one to be ordained.</p>
+                <h4 class="rite-h" data-i18n="h.homily">Homily</h4>
+                <p class="rubric" data-i18n="rub.homily">The Bishop preaches to the people and to the one to be ordained.</p>
 
-                <h4 class="rite-h">Promises of the Elect</h4>
-                <p class="rubric" data-for="deacon">The elect stands before the Bishop, who questions him on his resolve to serve the Church with humble charity, to hold the mystery of faith with a clear conscience, to remain celibate for the sake of the Kingdom, to pray the Liturgy of the Hours for the whole world, and to conform his life to Christ. To each he answers:</p>
-                <p class="rubric" data-for="priest">The elect stands before the Bishop, who questions him on his resolve to preach, to celebrate the sacraments, to pray for the people entrusted to him, and to be united ever more closely to Christ. To each he answers:</p>
-                <p class="vr"><span class="r">℟.</span> <strong>I do.</strong> &nbsp;/&nbsp; <strong>I do, with the help of God.</strong></p>
-                <p class="rubric">Kneeling, he places his joined hands between those of the Bishop.</p>
-                <p class="vr"><span class="v">℣.</span> Do you promise respect and obedience to me and my successors?</p>
-                <p class="vr"><span class="r">℟.</span> <strong>I do.</strong></p>
-                <p class="vr"><span class="v">℣.</span> May God who has begun the good work in you bring it to fulfilment.</p>
+                <h4 class="rite-h" data-i18n="h.promises">Promises of the Elect</h4>
+                <p class="rubric" data-for="deacon" data-i18n="rub.prom.deacon">The elect stands before the Bishop, who questions him on his resolve to serve the Church with humble charity, to hold the mystery of faith with a clear conscience, to remain celibate for the sake of the Kingdom, to pray the Liturgy of the Hours for the whole world, and to conform his life to Christ. To each he answers:</p>
+                <p class="rubric" data-for="priest" data-i18n="rub.prom.priest">The elect stands before the Bishop, who questions him on his resolve to preach, to celebrate the sacraments, to pray for the people entrusted to him, and to be united ever more closely to Christ. To each he answers:</p>
+                <p class="vr"><span class="r">℟.</span> <span data-i18n="r.ido"><strong>I do.</strong> &nbsp;/&nbsp; <strong>I do, with the help of God.</strong></span></p>
+                <p class="rubric" data-i18n="rub.hands">Kneeling, he places his joined hands between those of the Bishop.</p>
+                <p class="vr"><span class="v">℣.</span> <span data-i18n="vr.obey">Do you promise respect and obedience to me and my successors?</span></p>
+                <p class="vr"><span class="r">℟.</span> <strong data-i18n="r.ido1">I do.</strong></p>
+                <p class="vr"><span class="v">℣.</span> <span data-i18n="vr.fulfil">May God who has begun the good work in you bring it to fulfilment.</span></p>
 
-                <h4 class="rite-h">Litany of the Saints</h4>
-                <p class="rubric">All kneel. The elect lies prostrate before the altar — a sign of total self‑offering — while the Church in heaven and on earth is invoked.</p>
+                <h4 class="rite-h" data-i18n="h.litany">Litany of the Saints</h4>
+                <p class="rubric" data-i18n="rub.litany">All kneel. The elect lies prostrate before the altar — a sign of total self‑offering — while the Church in heaven and on earth is invoked.</p>
                 <ul class="litany">
-                  <li><span>Lord, have mercy.</span><em>Lord, have mercy.</em></li>
-                  <li><span>Christ, have mercy.</span><em>Christ, have mercy.</em></li>
-                  <li><span>Holy Mary, Mother of God,</span><em>pray for us.</em></li>
-                  <li><span>Saint Joseph,</span><em>pray for us.</em></li>
-                  <li><span>Saints Peter and Paul,</span><em>pray for us.</em></li>
-                  <li data-for="deacon"><span>Saint Stephen and Saint Lawrence,</span><em>pray for us.</em></li>
-                  <li data-for="priest"><span>Saint John Vianney,</span><em>pray for us.</em></li>
-                  <li data-hide-empty="patron"><span><span data-bind="patron"></span>,</span><em>pray for us.</em></li>
-                  <li><span>All holy men and women,</span><em>pray for us.</em></li>
-                  <li><span>Graciously bless, sanctify and consecrate this chosen one,</span><em>Lord, we ask you, hear our prayer.</em></li>
+                  <li><span data-i18n="lit.lord">Lord, have mercy.</span><em data-i18n="lit.lord">Lord, have mercy.</em></li>
+                  <li><span data-i18n="lit.christ">Christ, have mercy.</span><em data-i18n="lit.christ">Christ, have mercy.</em></li>
+                  <li><span data-i18n="lit.mary">Holy Mary, Mother of God,</span><em data-i18n="lit.pray1">pray for us.</em></li>
+                  <li><span data-i18n="lit.joseph">Saint Joseph,</span><em data-i18n="lit.pray1">pray for us.</em></li>
+                  <li><span data-i18n="lit.peterpaul">Saints Peter and Paul,</span><em data-i18n="lit.pray2">pray for us.</em></li>
+                  <li data-for="deacon"><span data-i18n="lit.stephen">Saint Stephen and Saint Lawrence,</span><em data-i18n="lit.pray2">pray for us.</em></li>
+                  <li data-for="priest"><span data-i18n="lit.vianney">Saint John Vianney,</span><em data-i18n="lit.pray1">pray for us.</em></li>
+                  <li data-hide-empty="patron"><span><span data-bind="patron"></span>,</span><em data-i18n="lit.pray1">pray for us.</em></li>
+                  <li><span data-i18n="lit.all">All holy men and women,</span><em data-i18n="lit.pray2">pray for us.</em></li>
+                  <li><span data-i18n="lit.bless">Graciously bless, sanctify and consecrate this chosen one,</span><em data-i18n="lit.hear">Lord, we ask you, hear our prayer.</em></li>
                 </ul>
 
                 <div class="moment">
-                  <p class="label">The Essential Moment</p>
-                  <h4 class="moment__title">Laying on of Hands &amp; Prayer of Ordination</h4>
-                  <p class="rubric" data-for="deacon">In complete silence the Bishop alone lays his hands on the head of the elect, then sings the Prayer of Ordination. By this gesture and these words, <span data-bind="firstName">Felix</span> becomes a deacon.</p>
-                  <p class="rubric" data-for="priest">In complete silence the Bishop lays his hands on the head of the elect. Every priest present then does the same, one by one. The Bishop sings the Prayer of Ordination; by this gesture and these words, <span data-bind="firstName">Felix</span> becomes a priest.</p>
-                  <p class="moment__note">Please remain kneeling and silent — this is the heart of the day.</p>
+                  <p class="label" data-i18n="moment.label">The Essential Moment</p>
+                  <h4 class="moment__title" data-i18n="moment.title">Laying on of Hands &amp; Prayer of Ordination</h4>
+                  <p class="rubric" data-for="deacon" data-i18n="moment.deacon">In complete silence the Bishop alone lays his hands on the head of the elect, then sings the Prayer of Ordination. By this gesture and these words, <span data-bind="firstName">Felix</span> becomes a deacon.</p>
+                  <p class="rubric" data-for="priest" data-i18n="moment.priest">In complete silence the Bishop lays his hands on the head of the elect. Every priest present then does the same, one by one. The Bishop sings the Prayer of Ordination; by this gesture and these words, <span data-bind="firstName">Felix</span> becomes a priest.</p>
+                  <p class="moment__note" data-i18n="moment.note">Please remain kneeling and silent — this is the heart of the day.</p>
                 </div>
 
-                <h4 class="rite-h">Explanatory Rites</h4>
+                <h4 class="rite-h" data-i18n="h.explan">Explanatory Rites</h4>
                 <dl class="rites-list" data-for="deacon">
-                  <div><dt>Investiture</dt><dd>He is vested in the deacon’s stole, worn across the body, and the dalmatic.</dd></div>
-                  <div><dt>Handing on of the Book of the Gospels</dt><dd><em>“Receive the Gospel of Christ, whose herald you have become. Believe what you read, teach what you believe, and practise what you teach.”</em></dd></div>
-                  <div><dt>Fraternal Kiss</dt><dd>The Bishop, and then the deacons present, welcome their new brother with the sign of peace.</dd></div>
+                  <div><dt data-i18n="ex.invest">Investiture</dt><dd data-i18n="ex.invest.deacon">He is vested in the deacon’s stole, worn across the body, and the dalmatic.</dd></div>
+                  <div><dt data-i18n="ex.gospel">Handing on of the Book of the Gospels</dt><dd data-i18n="ex.gospel.d"><em>“Receive the Gospel of Christ, whose herald you have become. Believe what you read, teach what you believe, and practise what you teach.”</em></dd></div>
+                  <div><dt data-i18n="ex.kiss">Fraternal Kiss</dt><dd data-i18n="ex.kiss.deacon">The Bishop, and then the deacons present, welcome their new brother with the sign of peace.</dd></div>
                 </dl>
                 <dl class="rites-list" data-for="priest">
-                  <div><dt>Investiture</dt><dd>He is vested in the priestly stole and chasuble.</dd></div>
-                  <div><dt>Anointing of Hands</dt><dd>The Bishop anoints his palms with Sacred Chrism: <em>“The Lord Jesus Christ, whom the Father anointed with the Holy Spirit and power, guard and preserve you, that you may sanctify the Christian people and offer sacrifice to God.”</em></dd></div>
-                  <div><dt>Handing on of Bread &amp; Wine</dt><dd><em>“Receive the oblation of the holy people, to be offered to God. Understand what you do, imitate what you celebrate, and conform your life to the mystery of the Lord’s Cross.”</em></dd></div>
-                  <div><dt>Fraternal Kiss</dt><dd>The Bishop, and then the priests, welcome their new brother into the presbyterate with the sign of peace.</dd></div>
+                  <div><dt data-i18n="ex.invest">Investiture</dt><dd data-i18n="ex.invest.priest">He is vested in the priestly stole and chasuble.</dd></div>
+                  <div><dt data-i18n="ex.anoint">Anointing of Hands</dt><dd data-i18n="ex.anoint.d">The Bishop anoints his palms with Sacred Chrism: <em>“The Lord Jesus Christ, whom the Father anointed with the Holy Spirit and power, guard and preserve you, that you may sanctify the Christian people and offer sacrifice to God.”</em></dd></div>
+                  <div><dt data-i18n="ex.bread">Handing on of Bread &amp; Wine</dt><dd data-i18n="ex.bread.d"><em>“Receive the oblation of the holy people, to be offered to God. Understand what you do, imitate what you celebrate, and conform your life to the mystery of the Lord’s Cross.”</em></dd></div>
+                  <div><dt data-i18n="ex.kiss">Fraternal Kiss</dt><dd data-i18n="ex.kiss.priest">The Bishop, and then the priests, welcome their new brother into the presbyterate with the sign of peace.</dd></div>
                 </dl>
               </div>
             </details>
 
             <!-- IV -->
             <details class="rite-part" id="part-4">
-              <summary><span class="numeral">IV</span><span class="rite-part__title">Liturgy of the Eucharist</span><span class="rite-part__chev" aria-hidden="true"></span></summary>
+              <summary><span class="numeral">IV</span><span class="rite-part__title" data-i18n="part4">Liturgy of the Eucharist</span><span class="rite-part__chev" aria-hidden="true"></span></summary>
               <div class="rite-part__body">
-                <p class="rubric" data-for="deacon">For the first time the new deacon serves at the altar: he receives the gifts, prepares the chalice, and ministers the Precious Blood at Communion.</p>
-                <p class="rubric" data-for="priest">For the first time, the new priest stands at the altar with the Bishop and concelebrates the Holy Sacrifice of the Mass.</p>
-                <p class="note">Catholics in a state of grace are invited to receive Holy Communion. All others are warmly welcome to come forward for a blessing with arms crossed over the chest, or to remain in prayer.</p>
+                <p class="rubric" data-for="deacon" data-i18n="p4.deacon">For the first time the new deacon serves at the altar: he receives the gifts, prepares the chalice, and ministers the Precious Blood at Communion.</p>
+                <p class="rubric" data-for="priest" data-i18n="p4.priest">For the first time, the new priest stands at the altar with the Bishop and concelebrates the Holy Sacrifice of the Mass.</p>
+                <p class="note" data-i18n="p4.communion">Catholics in a state of grace are invited to receive Holy Communion. All others are warmly welcome to come forward for a blessing with arms crossed over the chest, or to remain in prayer.</p>
               </div>
             </details>
 
             <!-- V -->
             <details class="rite-part" id="part-5">
-              <summary><span class="numeral">V</span><span class="rite-part__title">Concluding Rites</span><span class="rite-part__chev" aria-hidden="true"></span></summary>
+              <summary><span class="numeral">V</span><span class="rite-part__title" data-i18n="part5">Concluding Rites</span><span class="rite-part__chev" aria-hidden="true"></span></summary>
               <div class="rite-part__body">
-                <p class="rubric">The Bishop imparts the solemn blessing.<span data-for="deacon"> Then, for the first time, the new deacon dismisses the people.</span></p>
-                <p class="vr"><span class="v">℣.</span> Go forth, the Mass is ended.</p>
-                <p class="vr"><span class="r">℟.</span> <strong>Thanks be to God.</strong></p>
-                <p class="note" data-for="priest">After Mass, <span data-bind="firstName">Felix</span> will give his <strong>first priestly blessings</strong>. It is a long and happy tradition to receive one — and to kiss his newly anointed hands.</p>
+                <p class="rubric" data-i18n="p5.blessing">The Bishop imparts the solemn blessing.<span data-for="deacon"> Then, for the first time, the new deacon dismisses the people.</span></p>
+                <p class="vr"><span class="v">℣.</span> <span data-i18n="vr.go">Go forth, the Mass is ended.</span></p>
+                <p class="vr"><span class="r">℟.</span> <strong data-i18n="r.thanks">Thanks be to God.</strong></p>
+                <p class="note" data-for="priest" data-i18n="p5.first">After Mass, <span data-bind="firstName">Felix</span> will give his <strong>first priestly blessings</strong>. It is a long and happy tradition to receive one — and to kiss his newly anointed hands.</p>
               </div>
             </details>
 
@@ -372,8 +389,8 @@
     <section class="section section--navy" id="schedule">
       <div class="container">
         <header class="section__head reveal">
-          <p class="eyebrow eyebrow--gold">The Celebrations</p>
-          <h2 class="h2">When &amp; where</h2>
+          <p class="eyebrow eyebrow--gold" data-i18n="sched.eyebrow">The Celebrations</p>
+          <h2 class="h2" data-i18n="sched.title">When &amp; where</h2>
           <div class="divider divider--light" aria-hidden="true"><span>✟</span></div>
         </header>
 
@@ -385,41 +402,41 @@
     <section class="section section--vellum" id="visit">
       <div class="container">
         <header class="section__head reveal">
-          <p class="eyebrow">For Our Guests</p>
-          <h2 class="h2">Planning your visit</h2>
+          <p class="eyebrow" data-i18n="visit.eyebrow">For Our Guests</p>
+          <h2 class="h2" data-i18n="visit.title">Planning your visit</h2>
           <div class="divider" aria-hidden="true"><span>✟</span></div>
         </header>
 
         <div class="visit-grid">
           <article class="tab-card reveal">
             <p class="tab-card__num">i.</p>
-            <h3 class="h3">Arriving</h3>
-            <p>Ordinations draw a full church. Please plan to be seated <strong>30 minutes early</strong>; the front pews are kept for family and clergy, and ushers will guide you.</p>
+            <h3 class="h3" data-i18n="v1.t">Arriving</h3>
+            <p data-i18n="v1.d">Ordinations draw a full church. Please plan to be seated <strong>30 minutes early</strong>; the front pews are kept for family and clergy, and ushers will guide you.</p>
           </article>
           <article class="tab-card reveal">
             <p class="tab-card__num">ii.</p>
-            <h3 class="h3">Getting there</h3>
-            <p data-bind="travel">Venues and directions are on each celebration above. Car-sharing is warmly encouraged.</p>
+            <h3 class="h3" data-i18n="v2.t">Getting there</h3>
+            <p data-i18n="v2.d" data-bind="travel">Venues and directions are on each celebration above. Car-sharing is warmly encouraged.</p>
           </article>
           <article class="tab-card reveal">
             <p class="tab-card__num">iii.</p>
-            <h3 class="h3">What to wear</h3>
-            <p>Sunday best. Clergy attending are invited to vest; please bring your own alb and white stole.</p>
+            <h3 class="h3" data-i18n="v3.t">What to wear</h3>
+            <p data-i18n="v3.d">Sunday best. Clergy attending are invited to vest; please bring your own alb and white stole.</p>
           </article>
           <article class="tab-card reveal">
             <p class="tab-card__num">iv.</p>
-            <h3 class="h3">Photographs</h3>
-            <p>We ask that guests keep phones away during the rite so all may pray. Photos will be shared here afterwards.</p>
+            <h3 class="h3" data-i18n="v4.t">Photographs</h3>
+            <p data-i18n="v4.d">We ask that guests keep phones away during the rite so all may pray. Photos will be shared here afterwards.</p>
           </article>
           <article class="tab-card reveal">
             <p class="tab-card__num">v.</p>
-            <h3 class="h3">Children &amp; access</h3>
-            <p>Little ones are very welcome. If you need step-free access or a seat near the front, let the family know in advance and it will be arranged.</p>
+            <h3 class="h3" data-i18n="v5.t">Children &amp; access</h3>
+            <p data-i18n="v5.d">Little ones are very welcome. If you need step-free access or a seat near the front, let the family know in advance and it will be arranged.</p>
           </article>
           <article class="tab-card reveal">
             <p class="tab-card__num">vi.</p>
-            <h3 class="h3">Watching from afar</h3>
-            <p>If you cannot travel, you can still pray with us. <a class="link" data-href="livestream" href="#">Open the livestream&nbsp;→</a></p>
+            <h3 class="h3" data-i18n="v6.t">Watching from afar</h3>
+            <p><span data-i18n="v6.d">If you cannot travel, you can still pray with us.</span> <span data-live></span></p>
           </article>
         </div>
       </div>
@@ -429,10 +446,10 @@
     <section class="section section--parchment" id="prayer">
       <div class="container container--narrow">
         <div class="prayer-card reveal">
-          <p class="eyebrow">Please Pray</p>
-          <h2 class="h2">A Prayer for <span data-bind="firstName">Felix</span></h2>
+          <p class="eyebrow" data-i18n="prayer.eyebrow">Please Pray</p>
+          <h2 class="h2" data-i18n="prayer.title">A Prayer for <span data-bind="firstName">Felix</span></h2>
           <div class="divider" aria-hidden="true"><span>✟</span></div>
-          <p class="prayer-card__text">
+          <p class="prayer-card__text" data-i18n="prayer.text">
             Lord Jesus, who came not to be served but to serve,<br>
             you called <span data-bind="firstName">Felix</span> by name before he knew your voice.<br>
             Make his hands gentle for the sick,<br>
@@ -442,7 +459,7 @@
             when the altar is quiet, be his joy.<br>
             Mary, Mother of Priests, keep him close to your Son.
           </p>
-          <p class="prayer-card__amen">Amen.</p>
+          <p class="prayer-card__amen" data-i18n="prayer.amen">Amen.</p>
         </div>
       </div>
     </section>
@@ -451,18 +468,18 @@
     <section class="section section--vellum" id="rsvp">
       <div class="container container--form">
         <header class="section__head reveal">
-          <p class="eyebrow">Répondez s’il vous plaît</p>
-          <h2 class="h2">Kindly reply</h2>
-          <p class="section__lede">Please reply as soon as you can — it helps greatly with seating, meals and logistics. Choose any of the celebrations, this November or next May.</p>
+          <p class="eyebrow" data-i18n="rsvp.eyebrow">Répondez s’il vous plaît</p>
+          <h2 class="h2" data-i18n="rsvp.title">Kindly reply</h2>
+          <p class="section__lede" data-i18n="rsvp.lede">Please reply as soon as you can — it helps greatly with seating, meals and logistics. Choose any of the celebrations, this November or next May.</p>
           <div class="divider" aria-hidden="true"><span>✟</span></div>
         </header>
 
         <div class="rsvp reveal">
           <div class="rsvp__frame">
-            <p class="rsvp__loading" aria-hidden="true"><span>✠</span>Preparing the reply card…</p>
+            <p class="rsvp__loading" aria-hidden="true"><span>✠</span><em data-i18n="rsvp.loading">Preparing the reply card…</em></p>
             <iframe data-form title="Reply to the invitation" loading="lazy"></iframe>
           </div>
-          <p class="rsvp__fine">Replies go straight to the family. Trouble seeing the form? <a class="link" data-href="formView" href="#" target="_blank" rel="noopener">Open it in a new tab</a>.</p>
+          <p class="rsvp__fine"><span data-i18n="rsvp.fine">Replies go straight to the family. Trouble seeing the form?</span> <a class="link" data-href="formView" href="#" target="_blank" rel="noopener" data-i18n="rsvp.open">Open it in a new tab</a>.</p>
         </div>
       </div>
     </section>
@@ -475,9 +492,10 @@
     <div class="divider divider--light" aria-hidden="true"><span>✟</span></div>
     <p class="footer__meta"><span data-bind="displayName">Felix Matengo</span> · <span data-bind="yearsRoman">MMXXVI – MMXXVII</span></p>
     <p class="footer__small">Ad maiorem Dei gloriam</p>
-    <a class="footer__top" href="#top">Return to top ↑</a>
+    <a class="footer__top" href="#top" data-i18n="footer.top">Return to top ↑</a>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
