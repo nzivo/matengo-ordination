@@ -457,44 +457,12 @@
           <div class="divider" aria-hidden="true"><span>✟</span></div>
         </header>
 
-        <form class="rsvp reveal" novalidate>
-          <div class="field">
-            <input id="f-name" name="name" type="text" autocomplete="name" placeholder=" " required>
-            <label for="f-name">Full name</label>
-            <p class="field__err">Please tell us who you are.</p>
+        <div class="rsvp reveal">
+          <div class="rsvp__frame">
+            <p class="rsvp__loading" aria-hidden="true"><span>✠</span>Preparing the reply card…</p>
+            <iframe data-form title="Reply to the invitation" loading="lazy"></iframe>
           </div>
-          <div class="field">
-            <input id="f-email" name="email" type="email" autocomplete="email" placeholder=" " required>
-            <label for="f-email">Email</label>
-            <p class="field__err">We need a valid email address.</p>
-          </div>
-
-          <fieldset class="choice" data-choice="events">
-            <legend class="label">What do you plan to attend?</legend>
-            <div data-event-checks></div>
-            <p class="field__err">Please choose at least one celebration.</p>
-          </fieldset>
-
-          <fieldset class="choice">
-            <legend class="label">Will others come with you?</legend>
-            <label class="diamond"><input type="radio" name="company" value="No" checked><span></span>No, just me</label>
-            <label class="diamond"><input type="radio" name="company" value="Yes"><span></span>Yes, I’m bringing others</label>
-          </fieldset>
-
-          <div class="field field--small" data-company-count hidden>
-            <input id="f-guests" name="count" type="number" min="1" max="30" inputmode="numeric" placeholder=" ">
-            <label for="f-guests">How many people?</label>
-            <p class="field__err">Please tell us how many.</p>
-          </div>
-
-          <button class="btn btn--primary btn--block" type="submit">Send my reply</button>
-          <p class="rsvp__fine">Replies go straight to the family. Prefer Google Forms? <a class="link" data-href="formView" href="#" target="_blank" rel="noopener">Reply there instead</a>.</p>
-        </form>
-
-        <div class="rsvp-done" hidden tabindex="-1">
-          <p class="rsvp-done__cross" aria-hidden="true">✠</p>
-          <h3 class="h2">Thank you</h3>
-          <p>Your reply has been sent. <span data-bind="firstName">Felix</span> is grateful for every prayer.</p>
+          <p class="rsvp__fine">Replies go straight to the family. Trouble seeing the form? <a class="link" data-href="formView" href="#" target="_blank" rel="noopener">Open it in a new tab</a>.</p>
         </div>
       </div>
     </section>

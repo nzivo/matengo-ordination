@@ -76,7 +76,7 @@ button { font: inherit; cursor: pointer; }
 
 .container { width: 100%; max-width: calc(var(--max) + 2 * var(--margin)); margin-inline: auto; padding-inline: var(--margin); }
 .container--narrow { max-width: calc(var(--reading) + 2 * var(--margin)); }
-.container--form { max-width: calc(600px + 2 * var(--margin)); }
+.container--form { max-width: calc(700px + 2 * var(--margin)); }
 
 /* ---------- Type roles ---------- */
 .eyebrow, .label {
@@ -404,54 +404,18 @@ button { font: inherit; cursor: pointer; }
 .prayer-card__text { font-family: var(--serif); font-size: 21px; line-height: 1.7; color: var(--ink); margin: 0 auto var(--space-md); max-width: 560px; }
 .prayer-card__amen { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--crimson); margin: 0; }
 
-/* ---------- RSVP form ---------- */
-.rsvp { background: var(--linen); border: 1px solid var(--hairline); padding: 40px; box-shadow: var(--shadow-1); }
-.field { position: relative; margin-bottom: 22px; }
-.field input, .field textarea {
-  width: 100%; border: 1px solid #C5A85C80; border-radius: 0; background: #fff;
-  padding: 24px 16px 8px; font: 16px/24px var(--sans); color: var(--ink); transition: border-color .2s, box-shadow .2s;
-  -webkit-appearance: none; appearance: none;
-}
-.field textarea { resize: vertical; min-height: 120px; }
-.field--small { max-width: 240px; }
-.field label { position: absolute; left: 17px; top: 17px; font-size: 16px; color: var(--ink-soft); pointer-events: none; transition: all .2s var(--ease); transform-origin: left; }
-.field input:focus, .field textarea:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 1px var(--vellum), 0 0 0 2px var(--gold); }
-.field input:focus + label, .field input:not(:placeholder-shown) + label,
-.field textarea:focus + label, .field textarea:not(:placeholder-shown) + label {
-  top: 7px; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--navy);
-}
-.field__err { display: none; margin: 6px 0 0; font-size: 13px; color: var(--crimson); }
-.is-invalid > input { border-color: var(--crimson); }
-.field.is-invalid .field__err { display: block; }
+/* ---------- RSVP: embedded Google Form ---------- */
+.rsvp { background: var(--linen); border: 1px solid var(--hairline); padding: 6px; box-shadow: var(--shadow-1); position: relative; }
+.rsvp::before { content: ""; position: absolute; inset: 5px; border: 1px solid var(--gold-hair); pointer-events: none; }
+.rsvp__frame { position: relative; height: 1420px; background: var(--vellum); }
+.rsvp__frame iframe { position: relative; display: block; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .6s var(--ease); }
+.rsvp__frame.is-loaded iframe { opacity: 1; }
+.rsvp__loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 10px; padding-top: 120px; margin: 0; font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--ink-soft); }
+.rsvp__loading span { font-style: normal; font-size: 30px; color: var(--gold); animation: breathe 2.4s ease-in-out infinite; }
+.rsvp__frame.is-loaded .rsvp__loading { display: none; }
+@keyframes breathe { 50% { opacity: .35; } }
+.rsvp__fine { margin: 16px 0 0; text-align: center; font-size: 14px; color: var(--ink-soft); }
 .rsvp__fine .link { font-weight: 500; }
-
-.choice { border: 0; margin: 0 0 24px; padding: 0; display: grid; gap: 10px; }
-.choice legend { margin-bottom: 12px; padding: 0; }
-.diamond, .square { display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 16px; }
-.diamond input, .square input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.diamond > input + span, .square > input + span { flex: none; width: 16px; height: 16px; border: 1px solid var(--navy); position: relative; background: #fff; transition: background .2s; }
-.diamond > input + span { transform: rotate(45deg); width: 13px; height: 13px; margin: 0 2px; }
-.diamond input:checked + span { background: var(--navy); }
-.diamond input:checked + span::after { content: ""; position: absolute; inset: 3px; background: var(--gold); }
-.square input:checked + span { background: var(--navy); }
-.square input:checked + span::after { content: ""; position: absolute; left: 5px; top: 1px; width: 5px; height: 10px; border: solid var(--gold); border-width: 0 2px 2px 0; transform: rotate(45deg); }
-.diamond input:focus-visible + span, .square input:focus-visible + span { outline: 1px solid var(--gold); outline-offset: 3px; }
-.check-group { display: grid; gap: 12px; padding: 16px 18px; background: var(--vellum); border-left: 2px solid var(--gold); }
-.check-group + .check-group { margin-top: 12px; }
-.check-group__head { margin: 0 0 2px; font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--navy); }
-.square { align-items: flex-start; }
-.square > input + span { margin-top: 4px; }
-.square__text { display: flex; flex-direction: column; line-height: 1.35; }
-.square__text small { font-size: 13px; color: var(--ink-soft); }
-.choice > .field__err { margin: 0; }
-.choice.is-invalid > .field__err { display: block; }
-.choice.is-invalid .check-group { border-left-color: var(--crimson); }
-.rsvp__fine { margin: 14px 0 0; text-align: center; font-size: 13px; color: var(--ink-soft); }
-
-.rsvp-done { text-align: center; background: var(--linen); border: 1px solid var(--gold); outline: 1px solid var(--hairline); outline-offset: 4px; padding: 56px 32px; }
-.rsvp-done__cross { font-size: 34px; color: var(--gold); margin-bottom: 8px; }
-.rsvp-done .h2 { margin-bottom: 12px; }
-.rsvp-done p:last-child { color: var(--ink-soft); margin: 0; }
 
 /* ---------- Footer ---------- */
 .footer { background: var(--navy); color: var(--on-navy-soft); text-align: center; padding: var(--space-2xl) var(--margin) var(--space-xl); }
@@ -513,7 +477,7 @@ button { font: inherit; cursor: pointer; }
   .moment { margin-inline: -10px; padding: 24px 18px; }
   .litany li { flex-direction: column; gap: 2px; }
   .litany li em { text-align: left; max-width: none; }
-  .rsvp { padding: 24px 18px; }
+  .rsvp__frame { height: 1780px; }
   .prayer-card { padding: 40px 22px; }
   .prayer-card__text { font-size: 19px; }
   .prayer-card__text br { display: none; }

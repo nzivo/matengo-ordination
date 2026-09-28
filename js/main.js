@@ -21,70 +21,53 @@ const ORDINATION = {
     priest: { date: "2027-05-22", time: "" }
   },
 
-  // The six choices below must match the Google Form options word for word
   events: [
     {
       group: "deacon", id: "diaconate", main: true,
       tag: "The Ordination", title: "Ordination to the Diaconate",
       date: "2026-11-21", time: "", hours: 3,
       place: "", address: "",
-      desc: "Felix is ordained a deacon by the laying on of hands and prayer of the Bishop.",
-      formValue: "Ordination to the diaconate on the 21st of November 2026"
+      desc: "Felix is ordained a deacon by the laying on of hands and prayer of the Bishop."
     },
     {
       group: "deacon", id: "diaconate-lunch",
       tag: "Following", title: "Lunch after the Ordination",
       date: "2026-11-21", time: "", hours: 3,
       place: "", address: "",
-      desc: "A festive lunch together after the ordination Mass.",
-      formValue: "Lunch after ordination to the diaconate on the 21st of November 2026"
+      desc: "A festive lunch together after the ordination Mass."
     },
     {
       group: "deacon", id: "villa-tevere",
       tag: "The Next Day", title: "Mass of Thanksgiving",
       date: "2026-11-22", time: "", hours: 1.5,
       place: "Villa Tevere", address: "Rome",
-      desc: "A Mass of thanksgiving at which Felix serves at the altar as a new deacon.",
-      formValue: "Thanksgiving Mass in Villa Tevere on 22nd November 2026"
+      desc: "A Mass of thanksgiving at which Felix serves at the altar as a new deacon."
     },
     {
       group: "priest", id: "priesthood", main: true,
       tag: "The Ordination", title: "Ordination to the Priesthood",
       date: "2027-05-22", time: "", hours: 3,
       place: "", address: "",
-      desc: "Felix is ordained a priest of Jesus Christ. First blessings follow the Mass.",
-      formValue: "Priestly ordination on the 22nd of May 2027"
+      desc: "Felix is ordained a priest of Jesus Christ. First blessings follow the Mass."
     },
     {
       group: "priest", id: "cavabianca-lunch",
       tag: "Following", title: "Lunch at Cavabianca",
       date: "2027-05-22", time: "", hours: 3,
       place: "Cavabianca", address: "Rome",
-      desc: "Lunch together after the ordination — and a chance to receive a first blessing.",
-      formValue: "Lunch in Cavabianca on the 22nd of May 2027"
+      desc: "Lunch together after the ordination — and a chance to receive a first blessing."
     },
     {
       group: "priest", id: "first-mass",
       tag: "The Next Day", title: "First Mass of Thanksgiving",
       date: "2027-05-23", time: "", hours: 1.5,
       place: "", address: "",
-      desc: "Father Felix offers the Holy Sacrifice of the Mass for the first time.",
-      formValue: "Thanksgiving Mass on 23rd of May 2027"
+      desc: "Father Felix offers the Holy Sacrifice of the Mass for the first time."
     }
   ],
 
-  // Replies are sent into this Google Form (never put the /edit link here)
-  googleForm: {
-    action: "https://docs.google.com/forms/d/e/1FAIpQLSdHCJzoiHLxNh2svcJQMOfn0jXbz5-fJGuDUt6pwfPGgqBRWg/formResponse",
-    view: "https://docs.google.com/forms/d/e/1FAIpQLSdHCJzoiHLxNh2svcJQMOfn0jXbz5-fJGuDUt6pwfPGgqBRWg/viewform",
-    fields: {
-      email: "entry.1713225539",
-      name: "entry.2112914121",
-      events: "entry.309516061",
-      company: "entry.281572454",
-      count: "entry.1341574413"
-    }
-  }
+  // The RSVP section embeds this Google Form (use the public link, never the /edit one)
+  googleForm: "https://docs.google.com/forms/d/e/1FAIpQLSdHCJzoiHLxNh2svcJQMOfn0jXbz5-fJGuDUt6pwfPGgqBRWg/viewform"
 };
 
 /* ========================================================= */
@@ -158,7 +141,7 @@ const ORDINATION = {
   const live = $('[data-href="livestream"]');
   if (C.livestream) { live.href = C.livestream; live.target = "_blank"; live.rel = "noopener"; }
   else live.replaceWith(Object.assign(document.createElement("em"), { textContent: "A livestream link will appear here before each ordination." }));
-  $('[data-href="formView"]').href = C.googleForm.view;
+  $('[data-href="formView"]').href = C.googleForm;
 
   /* ---------- Milestones: hero dates + timeline ---------- */
   $$("[data-milestone]").forEach(el => {
@@ -228,7 +211,6 @@ const ORDINATION = {
     priest: { numeral: "II", name: "The Priesthood", when: fmt(priest, { month: "long", year: "numeric" }) }
   };
   const eventsEl = $("[data-events]");
-  const checksEl = $("[data-event-checks]");
 
   Object.entries(GROUPS).forEach(([key, g]) => {
     const list = C.events.filter(ev => ev.group === key);
@@ -238,10 +220,6 @@ const ORDINATION = {
     wrap.className = "event-group" + (s === "done" ? " is-done" : "");
     wrap.innerHTML = `<h3 class="event-group__head reveal"><span class="numeral">${g.numeral}</span>${g.name}<span class="event-group__when">${g.when}</span></h3><div class="events"></div>`;
     const grid = $(".events", wrap);
-
-    const checkGroup = document.createElement("div");
-    checkGroup.className = "check-group";
-    checkGroup.innerHTML = `<p class="check-group__head">${g.name} · ${g.when}</p>`;
 
     list.forEach(ev => {
       const d = at(ev.date, ev.time);
@@ -265,18 +243,9 @@ const ORDINATION = {
         </div>`;
       $("button", card).addEventListener("click", () => downloadIcs(ev));
       grid.appendChild(card);
-
-      if (s !== "done") {
-        const lab = document.createElement("label");
-        lab.className = "square";
-        lab.innerHTML = `<input type="checkbox" name="events" value="${html(ev.formValue)}"><span></span>
-          <span class="square__text">${html(ev.title)}<small>${fmt(d, { weekday: "long", day: "numeric", month: "long" })}</small></span>`;
-        checkGroup.appendChild(lab);
-      }
     });
 
     eventsEl.appendChild(wrap);
-    if (checkGroup.querySelector("input")) checksEl.appendChild(checkGroup);
   });
 
   /* ---------- Navigation ---------- */
@@ -356,65 +325,8 @@ const ORDINATION = {
     revealIO.observe(el);
   });
 
-  /* ---------- RSVP → Google Form ---------- */
-  const form = $(".rsvp");
-  const done = $(".rsvp-done");
-  const countField = $("[data-company-count]");
-  const countInput = $("#f-guests");
-  const eventsSet = $('[data-choice="events"]');
-
-  form.addEventListener("change", e => {
-    if (e.target.name === "company") {
-      countField.hidden = e.target.value !== "Yes";
-      if (!countField.hidden) countInput.focus();
-    }
-    if (e.target.name === "events") eventsSet.classList.remove("is-invalid");
-  });
-
-  function validate() {
-    const checks = [
-      [$("#f-name").closest(".field"), $("#f-name"), v => v.trim().length > 1],
-      [$("#f-email").closest(".field"), $("#f-email"), v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())],
-      [eventsSet, $('input[name="events"]', eventsSet), () => $$('input[name="events"]:checked', form).length > 0],
-      [countField, countInput, v => countField.hidden || Number(v) >= 1]
-    ];
-    let first = null;
-    checks.forEach(([box, input, test]) => {
-      const good = test(input ? input.value : "");
-      box.classList.toggle("is-invalid", !good);
-      if (input) input.setAttribute("aria-invalid", String(!good));
-      if (!good && !first) first = input;
-    });
-    if (first) first.focus();
-    return !first;
-  }
-
-  form.addEventListener("submit", async e => {
-    e.preventDefault();
-    if (!validate()) return;
-    const fd = new FormData(form);
-    const F = C.googleForm.fields;
-    const body = new URLSearchParams();
-    body.append(F.name, fd.get("name").trim());
-    body.append(F.email, fd.get("email").trim());
-    fd.getAll("events").forEach(v => body.append(F.events, v));
-    body.append(F.company, fd.get("company"));
-    if (fd.get("company") === "Yes") body.append(F.count, fd.get("count"));
-
-    const btn = $('button[type="submit"]', form);
-    btn.disabled = true;
-    btn.textContent = "Sending…";
-    try {
-      // Google Forms doesn't allow reading the response cross-origin, so this is fire-and-forget
-      await fetch(C.googleForm.action, { method: "POST", mode: "no-cors", body });
-      form.hidden = true;
-      done.hidden = false;
-      done.focus();
-    } catch (err) {
-      btn.disabled = false;
-      btn.textContent = "Send my reply";
-      alert("Sorry — your reply could not be sent. Please check your connection, or use the Google Form link below the button.");
-    }
-  });
-  $$(".field input").forEach(i => i.addEventListener("input", () => i.closest(".field").classList.remove("is-invalid")));
+  /* ---------- RSVP: embedded Google Form ---------- */
+  const frame = $("[data-form]");
+  frame.addEventListener("load", () => frame.closest(".rsvp__frame").classList.add("is-loaded"), { once: true });
+  frame.src = C.googleForm + "?embedded=true";
 })();
