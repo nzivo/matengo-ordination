@@ -1,46 +1,36 @@
 /* =========================================================
-   EDIT HERE — every personal detail on the site lives in this
-   one object. Change a value and the page updates everywhere.
-   Empty strings ("") hide that line on the page.
-   Wording in other languages lives in js/i18n.js.
+   EDIT HERE — the details that drive the page.
+   Wording (in every language) lives in js/i18n.js.
    ========================================================= */
 const ORDINATION = {
   firstName: "Felix",
-  displayName: "Felix Matengo",
-  bishop: "",                           // e.g. "His Excellency Bishop N." — shown under the name
-  motto: "",                            // e.g. "“Remain in my love”"
-  patron: "",                           // e.g. "Saint Felix" — also added to the Litany
-  homeParish: "",
-  formedAt: "",
-  portrait: "images/felix.jpg",         // the gold initial shows until it loads, or if it can't; "" for initial only
-  livestream: "",                       // link appears in "Watching from afar" when set
-  travel: "",                           // replaces the "Getting there" text when set
+  displayName: "Felix Oyende Matengo",
+  portrait: "images/felix-small.jpg",   // the gold initial shows until it loads, or if it can't; "" for initial only
 
-  // Dates are YYYY-MM-DD; times are 24h "HH:MM", or "" while still to be confirmed
-  ordinations: {
-    deacon: { date: "2026-11-21", time: "" },
-    priest: { date: "2027-05-22", time: "" }
-  },
+  // Links that open when set; while "" the Media cards say "coming soon"
+  livestream: "",                       // YouTube live link
+  gallery: "",                          // photo & video galleries
+  sharedAlbum: "",                      // album guests can upload to
 
-  // Each event's title and description are in js/i18n.js under "ev.<id>.title" / "ev.<id>.desc".
-  // tag is one of: "ordination", "following", "nextDay"
-  events: [
-    { group: "deacon", id: "diaconate", main: true, tag: "ordination",
-      date: "2026-11-21", time: "", hours: 3, place: "", address: "" },
-    { group: "deacon", id: "diaconate-lunch", tag: "following",
-      date: "2026-11-21", time: "", hours: 3, place: "", address: "" },
-    { group: "deacon", id: "villa-tevere", tag: "nextDay",
-      date: "2026-11-22", time: "", hours: 1.5, place: "Villa Tevere", address: "Rome" },
-    { group: "priest", id: "priesthood", main: true, tag: "ordination",
-      date: "2027-05-22", time: "", hours: 3, place: "", address: "" },
-    { group: "priest", id: "cavabianca-lunch", tag: "following",
-      date: "2027-05-22", time: "", hours: 3, place: "Cavabianca", address: "Rome" },
-    { group: "priest", id: "first-mass", tag: "nextDay",
-      date: "2027-05-23", time: "", hours: 1.5, place: "", address: "" }
-  ],
+  // RSVP opens this Google Form in a new tab (use the public link, never the /edit one)
+  rsvpForm: "https://docs.google.com/forms/d/e/1FAIpQLSdHCJzoiHLxNh2svcJQMOfn0jXbz5-fJGuDUt6pwfPGgqBRWg/viewform",
 
-  // The RSVP section embeds this Google Form (use the public link, never the /edit one)
-  googleForm: "https://docs.google.com/forms/d/e/1FAIpQLSdHCJzoiHLxNh2svcJQMOfn0jXbz5-fJGuDUt6pwfPGgqBRWg/viewform"
+  // Dates are YYYY-MM-DD; times are 24h "HH:MM", or "" while still to be confirmed.
+  // place is a key in js/i18n.js ("place.eugene", "place.peace"); titles/descriptions are "cel.<id>.title/desc".
+  celebrations: [
+    { id: "diaconate", main: true, date: "2026-11-21", time: "10:30", doors: "09:00",
+      place: "eugene", address: "Viale delle Belle Arti, 10, 00196 Rome",
+      maps: "https://maps.google.com/?q=Basilica+di+Sant'Eugenio+Roma" },
+    { id: "diaconate-thanks", date: "2026-11-22", time: "",
+      place: "peace", address: "Viale Bruno Buozzi 75, Rome",
+      maps: "https://maps.google.com/?q=Viale+Bruno+Buozzi+75+Roma" },
+    { id: "priesthood", main: true, date: "2027-05-22", time: "10:00", doors: "09:00",
+      place: "eugene", address: "Viale delle Belle Arti, 10, 00196 Rome",
+      maps: "https://maps.google.com/?q=Basilica+di+Sant'Eugenio+Roma" },
+    { id: "first-mass", date: "2027-05-23", time: "",
+      place: "peace", address: "Viale Bruno Buozzi 75, Rome",
+      maps: "https://maps.google.com/?q=Viale+Bruno+Buozzi+75+Roma" }
+  ]
 };
 
 /* ========================================================= */
@@ -65,10 +55,12 @@ const ORDINATION = {
   const fromUrl = new URLSearchParams(location.search).get("lang");
   let lang = [fromUrl, store.get()].find(l => l && LOCALES[l]) || "en";
 
-  const fill = s => s.replace(/\{first\}/g, html(C.firstName)).replace(/\{name\}/g, html(C.displayName));
-  const t = key => {
+  const fill = (s, vars = {}) => s
+    .replace(/\{first\}/g, html(C.firstName)).replace(/\{name\}/g, html(C.displayName))
+    .replace(/\{(\w+)\}/g, (m, k) => k in vars ? vars[k] : m);
+  const t = (key, vars) => {
     const s = (I18N[lang] || {})[key] ?? I18N.en[key];
-    return s != null ? fill(s) : english[key] ?? key;
+    return s != null ? fill(s, vars) : english[key] ?? key;
   };
 
   /* ---------- Dates ---------- */
@@ -80,8 +72,6 @@ const ORDINATION = {
     "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
   const TENS = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
   const under100 = n => n < 20 ? ONES[n] : TENS[Math.floor(n / 10)] + (n % 10 ? "-" + ONES[n % 10] : "");
-  const roman = n => [[1000, "M"], [900, "CM"], [500, "D"], [400, "CD"], [100, "C"], [90, "XC"], [50, "L"], [40, "XL"],
-    [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]].reduce((s, [v, r]) => { while (n >= v) { s += r; n -= v; } return s; }, "");
   const cap = s => s.charAt(0).toLocaleUpperCase(LOCALES[lang]) + s.slice(1);
 
   // Parse as local time so dates never shift across time zones
@@ -95,29 +85,24 @@ const ORDINATION = {
   const longDate = d => lang === "en"
     ? `${fmt(d, { weekday: "long" })}, the ${ORD[d.getDate()]} of ${fmt(d, { month: "long" })}`
     : cap(fmt(d, { weekday: "long", day: "numeric", month: "long" }));
-  const yearLine = y => lang === "en" ? "Two Thousand" + (y % 1000 ? " " + under100(y % 1000) : "") : `Anno Domini ${roman(y)}`;
-  const shortDate = d => fmt(d, { day: "numeric", month: "long", year: "numeric" });
+  const yearLine = y => lang === "en" ? "Two Thousand" + (y % 1000 ? " " + under100(y % 1000) : "") : String(y);
   const clock = (date, time) => time
-    ? at(date, time).toLocaleTimeString(LOCALES[lang], { hour: "numeric", minute: "2-digit", hour12: lang === "en" }).replace(" ", " ")
+    ? at(date, time).toLocaleTimeString(LOCALES[lang], { hour: "numeric", minute: "2-digit", hour12: lang === "en" }).replace(" ", " ").toUpperCase()
     : "";
 
-  const deacon = at(C.ordinations.deacon.date, C.ordinations.deacon.time);
-  const priest = at(C.ordinations.priest.date, C.ordinations.priest.time);
+  const ordDeacon = C.celebrations.find(c => c.id === "diaconate");
+  const ordPriest = C.celebrations.find(c => c.id === "priesthood");
+  const deacon = at(ordDeacon.date, ordDeacon.time);
+  const priest = at(ordPriest.date, ordPriest.time);
   const dayAfter = d => new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
-  // A milestone counts as "done" from the day after it
+  // Something counts as "done" from the day after it
   const status = d => new Date() >= dayAfter(d) ? "done" : "upcoming";
   const next = status(deacon) === "upcoming" ? "deacon" : status(priest) === "upcoming" ? "priest" : null;
 
-  /* ---------- Milestones: hero dates + timeline ---------- */
   $$("[data-milestone]").forEach(el => {
     const key = el.dataset.milestone;
-    const s = status(key === "deacon" ? deacon : priest);
-    el.classList.toggle("is-done", s === "done");
+    el.classList.toggle("is-done", status(key === "deacon" ? deacon : priest) === "done");
     el.classList.toggle("is-next", key === next);
-    if (el.classList.contains("timeline__item")) {
-      el.classList.toggle("timeline__item--done", s === "done");
-      el.classList.toggle("timeline__item--now", key === next);
-    }
   });
 
   /* ---------- Countdown to the next ordination ---------- */
@@ -144,68 +129,28 @@ const ORDINATION = {
     tickTimer = setTimeout(tick, 60000 - (Date.now() % 60000) + 50);
   }
 
-  /* ---------- Events + calendar ---------- */
-  const pad = n => String(n).padStart(2, "0");
-  const icsUTC = d => `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
-  const icsDay = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`;
-  const esc = s => s.replace(/[\\,;]/g, m => "\\" + m).replace(/\n/g, "\\n");
-  const plain = s => { const d = document.createElement("div"); d.innerHTML = s; return d.textContent; };
-  const where = ev => [ev.place, ev.address].filter(Boolean).join(", ");
-
-  function downloadIcs(ev) {
-    const start = at(ev.date, ev.time);
-    // Without a confirmed time, add it as an all-day event
-    const when = ev.time
-      ? [`DTSTART:${icsUTC(start)}`, `DTEND:${icsUTC(new Date(start.getTime() + ev.hours * 3600000))}`]
-      : [`DTSTART;VALUE=DATE:${icsDay(start)}`, `DTEND;VALUE=DATE:${icsDay(dayAfter(start))}`];
-    const body = [
-      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Ordination//EN", "BEGIN:VEVENT",
-      `UID:${ev.id}-${icsDay(start)}@ordination`, `DTSTAMP:${icsUTC(new Date())}`, ...when,
-      `SUMMARY:${esc(`${plain(t(`ev.${ev.id}.title`))} — ${C.displayName}`)}`,
-      ...(where(ev) ? [`LOCATION:${esc(where(ev))}`] : []),
-      `DESCRIPTION:${esc(plain(t(`ev.${ev.id}.desc`)))}`, "END:VEVENT", "END:VCALENDAR"
-    ].join("\r\n");
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([body], { type: "text/calendar" }));
-    a.download = `${ev.id}.ics`;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  }
-
-  const eventsEl = $("[data-events]");
-  function renderEvents(animate) {
-    eventsEl.innerHTML = "";
-    [["deacon", "I", deacon], ["priest", "II", priest]].forEach(([key, numeral, date]) => {
-      const wrap = document.createElement("div");
-      wrap.className = "event-group" + (status(date) === "done" ? " is-done" : "");
-      wrap.innerHTML = `<h3 class="event-group__head reveal"><span class="numeral">${numeral}</span>${t(`group.${key}`)}<span class="event-group__when">${fmt(date, { month: "long", year: "numeric" })}</span></h3><div class="events"></div>`;
-      const grid = $(".events", wrap);
-
-      C.events.filter(ev => ev.group === key).forEach(ev => {
-        const d = at(ev.date, ev.time);
-        const time = clock(ev.date, ev.time);
-        const card = document.createElement("article");
-        card.className = "event reveal" + (ev.main ? " event--main" : "");
-        card.innerHTML = `
-          <span class="event__tag${ev.main ? "" : " event__tag--quiet"}">${t(`tag.${ev.tag}`)}</span>
-          <p class="event__date"><span class="event__day">${d.getDate()}</span>
-            <span class="event__month">${cap(fmt(d, { month: "long" }))} ${d.getFullYear()}<br>${cap(fmt(d, { weekday: "long" }))}</span></p>
-          <h4 class="event__title">${t(`ev.${ev.id}.title`)}</h4>
-          <ul class="event__meta">
-            <li>${time ? `<strong>${time}</strong>` : `<em>${t("ev.tbcTime")}</em>`}</li>
-            <li>${ev.place ? `<strong>${html(ev.place)}</strong>` : `<em>${t("ev.tbaVenue")}</em>`}${ev.address ? `<br>${html(ev.address)}` : ""}</li>
-          </ul>
-          <p class="event__desc">${t(`ev.${ev.id}.desc`)}</p>
-          <div class="event__actions">
-            ${where(ev) ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(where(ev))}" target="_blank" rel="noopener">${t("ev.directions")}</a>` : ""}
-            <button type="button">${t("ev.calendar")}</button>
-          </div>`;
-        $("button", card).addEventListener("click", () => downloadIcs(ev));
-        grid.appendChild(card);
-      });
-      eventsEl.appendChild(wrap);
-    });
-    $$(".reveal", eventsEl).forEach(el => animate ? observeReveal(el) : el.classList.add("is-in"));
+  /* ---------- Celebrations timeline ---------- */
+  const stepsEl = $("[data-celebrations]");
+  function renderCelebrations(animate) {
+    stepsEl.innerHTML = C.celebrations.map(c => {
+      const d = at(c.date, c.time);
+      const time = clock(c.date, c.time);
+      const when = time
+        ? `<strong>${time}</strong>${c.doors ? ` · ${t("cel.doors", { time: clock(c.date, c.doors) })}` : ""}`
+        : `<em>${t("cel.tbc")}</em>`;
+      const state = status(d) === "done" ? " is-done" : "";
+      return `
+        <li class="step${c.main ? " step--main" : ""}${state} reveal">
+          <span class="step__mark" aria-hidden="true"></span>
+          <p class="step__date">${cap(fmt(d, { weekday: "long", day: "numeric", month: "long", year: "numeric" }))}</p>
+          <h3 class="step__title">${t(`cel.${c.id}.title`)}</h3>
+          <p class="step__time">${when}</p>
+          <p class="step__place"><strong>${t(`place.${c.place}`)}</strong><br>${html(c.address)}</p>
+          <p class="step__desc">${t(`cel.${c.id}.desc`)}</p>
+          <a class="step__link" href="${html(c.maps)}" target="_blank" rel="noopener">${t("cel.directions")}&nbsp;↗</a>
+        </li>`;
+    }).join("");
+    $$(".reveal", stepsEl).forEach(el => animate ? observeReveal(el) : el.classList.add("is-in"));
   }
 
   /* ---------- Reveal on scroll ---------- */
@@ -223,7 +168,7 @@ const ORDINATION = {
   let photo = null;
   if (C.portrait) {
     const frameEl = $("[data-portrait]");
-    photo = Object.assign(new Image(), { className: "profile__photo", decoding: "async" });
+    photo = Object.assign(new Image(), { className: "letter__img", decoding: "async" });
     photo.addEventListener("load", () => frameEl.classList.add("has-photo"));
     // Slow or failed download: remove it and the gold initial stays
     photo.addEventListener("error", () => { photo.remove(); photo = null; });
@@ -232,11 +177,6 @@ const ORDINATION = {
   }
 
   /* ---------- Paint all text in the current language ---------- */
-  const frame = $("[data-form]");
-  const parts = $$(".rite-part");
-  const expand = $('[data-action="expand-all"]');
-  const syncExpand = () => { expand.textContent = t(parts.every(p => p.open) ? "tools.close" : "tools.open"); };
-
   function render(first) {
     document.documentElement.lang = lang;
     document.title = t("title");
@@ -245,48 +185,32 @@ const ORDINATION = {
       const key = el.dataset.i18n;
       el.innerHTML = lang === "en" ? english[key] : t(key);
     });
-    $$("[data-i18n-aria]").forEach(el => el.setAttribute("aria-label", t(el.dataset.i18nAria)));
 
-    // Illuminated first letter on each reading
-    $$(".pericope__text").forEach(el => {
-      if ($(".incipit", el)) return;
-      const text = el.innerHTML;
-      el.innerHTML = `<span class="incipit">${text.charAt(0)}</span>${text.slice(1)}`;
-    });
-
+    const meta = c => [clock(c.date, c.time), t(`place.${c.place}`)].filter(Boolean).join(" · ");
     const data = {
       ...C,
       initial: C.firstName.charAt(0),
-      deaconLong: longDate(deacon), deaconShort: shortDate(deacon), deaconYear: yearLine(deacon.getFullYear()),
-      priestLong: longDate(priest), priestShort: shortDate(priest), priestYear: yearLine(priest.getFullYear()),
-      yearsRoman: deacon.getFullYear() === priest.getFullYear()
-        ? roman(priest.getFullYear())
-        : `${roman(deacon.getFullYear())} – ${roman(priest.getFullYear())}`
+      deaconLong: longDate(deacon), deaconYear: yearLine(deacon.getFullYear()), deaconMeta: meta(ordDeacon),
+      priestLong: longDate(priest), priestYear: yearLine(priest.getFullYear()), priestMeta: meta(ordPriest)
     };
     $$("[data-bind]").forEach(el => {
       const v = data[el.dataset.bind];
       if (typeof v === "string" && v) el.textContent = v;
     });
-    $$("[data-hide-empty]").forEach(el => { el.hidden = !data[el.dataset.hideEmpty]; });
-
     if (photo) photo.alt = t("portrait");
 
-    $("[data-live]").innerHTML = C.livestream
-      ? `<a class="link" href="${html(C.livestream)}" target="_blank" rel="noopener">${t("v6.link")}</a>`
-      : `<em>${t("v6.none")}</em>`;
-    $('[data-href="formView"]').href = `${C.googleForm}?hl=${lang}`;
-
     // Google translates its own buttons (Submit, Required…) with hl; the questions stay as written
-    const src = `${C.googleForm}?embedded=true&hl=${lang}`;
-    if (frame.getAttribute("src") !== src) {
-      frame.closest(".rsvp__frame").classList.remove("is-loaded");
-      frame.src = src;
-    }
-    frame.title = t("rsvp.frame");
+    $$("[data-rsvp]").forEach(a => { a.href = `${C.rsvpForm}?hl=${lang}`; });
+
+    $$("[data-media]").forEach(el => {
+      const key = el.dataset.media;
+      el.innerHTML = C[key]
+        ? `<a class="btn btn--primary btn--sm" href="${html(C[key])}" target="_blank" rel="noopener">${t(`media.${key}.open`)}&nbsp;↗</a>`
+        : `<span class="pill">${t(`media.${key}.soon`)}</span>`;
+    });
 
     tick();
-    renderEvents(first);
-    syncExpand();
+    renderCelebrations(first);
     syncLangPicker();
   }
 
@@ -360,58 +284,17 @@ const ORDINATION = {
   $$(".nav__links a").forEach(a => a.addEventListener("click", closeNav));
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeNav(); });
 
-  // Highlight the section in view — top nav and the rite contents list
-  const spy = links => {
-    const map = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
-    const io = new IntersectionObserver(entries => entries.forEach(en => {
-      if (!en.isIntersecting) return;
-      links.forEach(a => a.classList.remove("is-active"));
-      map.get(en.target.id)?.classList.add("is-active");
-    }), { rootMargin: "-45% 0px -50% 0px" });
-    map.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
-  };
-  spy($$('.nav__links a[href^="#"]:not(.btn)'));
-  spy($$(".rite-toc a"));
-
-  /* ---------- Order of service ---------- */
-  const rite = $("#rite");
-  const switchBtns = $$(".switch [data-show]");
-  const show = key => {
-    rite.dataset.showing = key;
-    switchBtns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.show === key)));
-  };
-  switchBtns.forEach(b => b.addEventListener("click", () => show(b.dataset.show)));
-  show(next || "priest");
-
-  $$(".rite-toc a").forEach(a => a.addEventListener("click", () => {
-    const d = document.getElementById(a.getAttribute("href").slice(1));
-    if (d) d.open = true;
-  }));
-
-  const lp = $('[data-action="large-print"]');
-  try { if (localStorage.getItem("largePrint") === "1") { document.body.classList.add("large-print"); lp.setAttribute("aria-pressed", "true"); } } catch (e) {}
-  lp.addEventListener("click", () => {
-    const on = document.body.classList.toggle("large-print");
-    lp.setAttribute("aria-pressed", String(on));
-    try { localStorage.setItem("largePrint", on ? "1" : "0"); } catch (e) {}
-  });
-
-  expand.addEventListener("click", () => {
-    const open = !parts.every(p => p.open);
-    parts.forEach(p => { p.open = open; });
-    syncExpand();
-  });
-  parts.forEach(p => p.addEventListener("toggle", syncExpand));
-
-  let wasOpen = [];
-  window.addEventListener("beforeprint", () => { wasOpen = parts.map(p => p.open); parts.forEach(p => { p.open = true; }); });
-  window.addEventListener("afterprint", () => { parts.forEach((p, i) => { p.open = wasOpen[i]; }); syncExpand(); });
-  $('[data-action="print"]').addEventListener("click", () => window.print());
-
-  /* ---------- RSVP: embedded Google Form ---------- */
-  frame.addEventListener("load", () => frame.closest(".rsvp__frame").classList.add("is-loaded"));
+  // Highlight the section in view
+  const navLinks = $$('.nav__links a[href^="#"]:not([data-rsvp])');
+  const sections = new Map(navLinks.map(a => [a.getAttribute("href").slice(1), a]));
+  const spyIO = new IntersectionObserver(entries => entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    navLinks.forEach(a => a.classList.remove("is-active"));
+    sections.get(en.target.id)?.classList.add("is-active");
+  }), { rootMargin: "-45% 0px -50% 0px" });
+  sections.forEach((_, id) => { const s = document.getElementById(id); if (s) spyIO.observe(s); });
 
   /* ---------- Go ---------- */
   render(true);
-  $$(".reveal").forEach(el => { if (!eventsEl.contains(el)) observeReveal(el); });
+  $$(".reveal").forEach(el => { if (!stepsEl.contains(el)) observeReveal(el); });
 })();
